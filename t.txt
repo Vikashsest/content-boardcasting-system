@@ -1,0 +1,278 @@
+🥇 1. my content (teacher)
+🥈 2. pending list (principal)
+🥉 3. approve/reject APIs,auth,and user 
+ ye sb api b gya aur kaun se kaun  se api bnaan hai ye btao code nhe  
+Technical Assignment – Backend Developer
+_______________________________________________
+1) Problem statement
+Design and develop a Content Broadcasting System (Backend Only) using:
+● Backend: Node.js (Express preferred)
+● Database: PostgreSQL / MySQL
+In modern educational environments, teachers distribute subject-based content
+(like question papers, announcements, or materials) directly to students’
+smartphones instead of using physical copies.
+Teachers upload content (e.g., Maths, Science), and once approved by the Principal,
+it is broadcasted via a public API endpoint that students can access.
+The system must support:
+● Authentication & RBAC
+● Content upload system
+● Approval workflow
+● Public broadcasting API
+● Subject-based scheduling and rotation
+● Proper handling of edge cases (like no content available)
+Objective of Assignment
+The purpose of this assignment is to evaluate:
+● Backend architecture and system design
+● API design and implementation
+● Database design and relationships
+● Authentication & authorization (JWT + RBAC)
+● File upload handling
+● Business logic implementation (especially scheduling)
+● Handling real-world edge cases
+● Clean code structure and scalability thinking
+This assignment focuses on correctness, structure, and real-world backend
+logic—not advanced distributed systems.
+
+2) User Flow
+
+Principal Flow
+Principal logs into the system
+Principal can:
+● View all uploaded content
+● View pending content
+● Approve content
+● Reject content with rejection reason
+Approved content becomes available for broadcasting
+Teacher Flow
+Teacher logs into the system
+Teacher can:
+● Upload content based on subject
+● Provide:
+○ Title
+○ File
+○ Subject (Maths / Science / etc.)
+○ Optional description
+○ Start time (when content should become visible)
+○ End time (when content should stop being visible)
+○ Optional rotation duration (e.g., 5 minutes per content)
+
+Teacher can view status of uploaded content
+Content Lifecycle
+uploaded → pending → approved / rejected
+● If rejected → rejection reason is visible
+● If approved → content will be shown only within the teacher-defined
+start_time and end_time
+Important Behavior
+Teacher controls scheduling:
+- Without start_time/end_time → content is not active
+
+- Within time window → eligible for rotation
+- Outside time window → not shown
+Even after approval, content is displayed only when it is scheduled by the teacher
+and falls within the active time window.
+Public Broadcasting Flow
+Students hit a teacher-specific public endpoint
+Example:
+● GET /content/live/teacher-1
+● GET /content/live/teacher-2
+● GET /content/live/teacher-3
+System:
+● Returns only approved content uploaded by that teacher
+● Applies scheduling/rotation logic only for that teacher’s content
+● Returns the currently active content for that teacher
+● If no approved/live content exists for that teacher, return:
+○ "No content available"
+
+Scheduling Flow
+Each subject has its own broadcast rotation
+Example (Maths):
+● Content A → 5 minutes
+● Content B → next 5 minutes
+● Content C → next 5 minutes
+● Loop continues
+Example (Science):
+● Content X → 5 minutes
+● Content Y → next 5 minutes
+System dynamically determines which content is active
+
+3) Requirements
+
+Backend Requirement
+● Node.js with Express
+● PostgreSQL / MySQL
+● JWT-based authentication
+● Password hashing using bcrypt
+Suggested Folder Structure
+src/
+controllers/
+routes/
+services/
+middlewares/
+models/
+utils/
+Core Modules
+● Auth Module
+● User Module (Principal / Teacher)
+● Content Module
+● Upload Module
+● Approval Module
+● Scheduling Module
+Content Upload System
+Supported formats
+● JPG
+● PNG
+● GIF
+File size
+● Max size (example: 10MB)
+Required fields
+● Title
+
+● File
+● Subject
+Optional field
+● Description
+Storage
+● Local storage (required)
+● S3 (bonus)
+Content Status Lifecycle
+● uploaded
+● pending
+● approved
+● rejected
+If rejected → store rejection reason
+Minimum Tables
+Users
+● id
+● name
+● email
+● password_hash
+● role (principal / teacher)
+● created_at
+Content
+● id
+● title
+● description
+● subject (maths, science, etc.)
+● file_url / file_path
+● file_type
+● file_size
+● uploaded_by
+● status
+● rejection_reason
+● approved_by
+
+● approved_at
+● created_at
+Content Slots (Subject-based)
+● id
+● subject
+● created_at
+Content Schedule
+● id
+● content_id
+● slot_id
+● rotation_order
+● duration (in minutes)
+● created_at
+
+4) Business Logic (Important)
+Authentication
+● JWT required for protected routes
+● Role-based access must be enforced
+● Principal and Teacher permissions must be strictly separated
+Upload Validation
+● Only allowed formats (jpg, png, gif)
+● File size limit enforced
+● Subject is mandatory
+● Title is mandatory
+Approval Workflow
+● Only principal can approve/reject content
+● Rejection must include reason
+● Only approved content goes live
+Subject-based Broadcasting
+● Content must belong to a subject
+● API supports subject filtering
+● Each subject has independent rotation
+
+Scheduling Logic (VERY IMPORTANT)
+● Multiple content items per subject
+● Rotate based on time duration
+● Loop continuously
+● System must determine active content using current time
+Public API Rules
+● /content/live returns only approved content
+● No pending/rejected content exposed
+● Must respect scheduling rules
+Edge Case Handling (IMPORTANT)
+Case 1: No content available
+● If no approved content exists → return empty response
+Case 2: Approved but not scheduled
+● If content exists but not active → return empty response
+Case 3: Invalid subject
+● Return empty response (not error)
+Security
+● Protect all private routes
+● No sensitive data exposure
+● Proper validation and error handling
+
+5) Architecture Notes (Required)
+Include a file named:
+architecture-notes.txt
+Explain:
+● Authentication & RBAC flow
+● Subject-based system design
+● Upload handling approach
+
+● Approval workflow design
+● Scheduling/rotation logic (VERY IMPORTANT)
+● Database design decisions
+● Folder structure
+● Middleware usage
+● Scalability approach (caching, queues, etc.)
+
+6) Submission Requirements
+Submit here: https://forms.gle/TduPUmDs9UiWQMSX7
+Please make sure you provide:
+● GitHub Repository Link (public & well-structured)
+● README.md (setup steps, tech stack, API usage)
+● Demo Video (3–7 mins) (Drive/Loom/YouTube link)
+● API Documentation (Postman or Swagger link)
+● Deployment Link
+
+Important
+● Submit only via the Google Form
+● Ensure all links are accessible
+● Mention any assumptions or skipped features in README
+
+7) Optional Features (Bonus Evaluation)
+1. Redis Caching
+Cache /content/live API
+2. Rate Limiting
+Protect public API
+3. S3 Upload
+Store files in cloud
+4. Subject-wise Analytics
+
+● Most active subject
+● Content usage tracking
+5. Pagination & Filters
+● Filter by subject
+● Filter by teacher
+● Filter by status
+
+8) Deadline
+Please complete and submit the assignment by: 28 April 2026, 10:00 AM. Submissions
+received after this deadline may not be considered.
+
+9) Evaluation Criteria
+We will evaluate based on:
+● API design and structure
+● Code quality and organization
+● Authentication & RBAC implementation
+● Upload system correctness
+● Scheduling logic (most important)
+● Database design
+● Error handling & validation
+● Edge case handling (very important)
+● Scalability thinking
+● Real-world backend understanding

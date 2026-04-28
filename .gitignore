@@ -1,0 +1,29 @@
+# Node modules
+
+node_modules/
+
+# Environment variables (IMPORTANT)
+
+.env
+.env.*
+
+# Logs
+
+*.log
+logs/
+
+# Build folders
+
+dist/
+build/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Editor folders
+
+.vscode/
+.idea/
+
