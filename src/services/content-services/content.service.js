@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { Content } from "../../models/content.model.js";
-import { ApiError } from "../../utils/ApiError.js";
+import { ApiError } from "../../utils/apiError.js";
 
 const uploadContentService = async ({
   title,

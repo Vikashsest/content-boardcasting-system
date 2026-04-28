@@ -273,15 +273,10 @@ http://localhost:3000/api-docs
 
 ## 🌐 Deployment
 
-- Backend deployed on: **Render / Railway**
+- Backend deployed on: **Render**
 - Database hosted on: **Cloud PostgreSQL**
 
 ---
-
-## 📹 Demo
-
-Watch the demo video here:
-👉 https://your-video-link
 
 ---
 
@@ -302,7 +297,6 @@ Watch the demo video here:
 ## 📈 Future Improvements
 
 - Redis caching for `/content/live`
-- Rate limiting
 - AWS S3 file storage
 - Analytics dashboard
 
