@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import app from "./app.js";
 import { sequelize } from "./config/db.connection.js";
-
+console.log("CURRENT FILE:", import.meta.url);
 const PORT = process.env.PORT;
 
 (async () => {
