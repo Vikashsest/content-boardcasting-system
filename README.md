@@ -269,7 +269,7 @@ npm run dev
 
 Swagger UI is available at:
 
-http://localhost:3000/api-docs
+https://content-boardcasting-system-1.onrender.com/api-docs
 
 ## 🌐 Deployment
 
@@ -282,7 +282,7 @@ http://localhost:3000/api-docs
 
 ## 🌍 Live API
 
-👉 https://your-backend-url
+👉 https://content-boardcasting-system-1.onrender.com
 
 ---
 
